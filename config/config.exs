@@ -3,20 +3,24 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
+use Mix.Config
 
+# General application configuration
+config :peepchat,
+  ecto_repos: [Peepchat.Repo]
+
+# Configures the endpoint
 config :peepchat, Peepchat.Endpoint,
-  http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
-  secret_key_base: System.get_env("SECRET_KEY_BASE"),
-  cache_static_manifest: "priv/static/manifest.json"
+  url: [host: "localhost"],
+  secret_key_base: "CHuYdarNy0UzKKBtgpbPAu2x+fuYpp6bevywtUsfRb/iZ17sNTOV67V6wsAmbkvX",
+  render_errors: [view: Peepchat.ErrorView, accepts: ~w(json)],
+  pubsub: [name: Peepchat.PubSub,
+           adapter: Phoenix.PubSub.PG2]
 
-config :peepchat, Peepchat.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
-  pool_size: 20
-
-# Do not print debug messages in production
-config :logger, level: :info
+# Configures Elixir's Logger
+config :logger, :console,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id]
 
 
 config :phoenix, :format_encoders,
